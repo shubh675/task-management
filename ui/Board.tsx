@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import TaskList from "./TaskList";
 import { api } from "@trpc/client-side/react";
-import { DragDropContext} from "react-beautiful-dnd";
+import { DragDropContext } from "react-beautiful-dnd";
 const Board: React.FC = () => {
   const [newTaskListTitle, setNewTaskListTitle] = useState<string>("");
   const [addingTaskList, setAddingTaskList] = useState(false);
@@ -15,9 +15,7 @@ const Board: React.FC = () => {
   const addTaskList = () => {
     if (newTaskListTitle) {
       createTaskList.mutate({ title: newTaskListTitle },{onSuccess:()=>{
-        if(createTaskList.data){
-          getTaskLists.data?.push({...createTaskList.data})
-        }   
+       getTaskLists.refetch();
        setAddingTaskList(false);
       }});
       setNewTaskListTitle("");
@@ -33,7 +31,7 @@ const Board: React.FC = () => {
      
       <div className=" space-x-4 p-4 mt-16">
          <DragDropContext onDragEnd={()=>{}}>
-        <div className="flex flex-wrap gap-5">
+        <div className="flex flex-wrap gap-5 items-start">
           
           {getTaskLists.data.map((taskList) => (
            
