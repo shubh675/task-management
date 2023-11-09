@@ -16,11 +16,13 @@ const TaskList: React.FC<TaskListProps> = ({ title, tasks, taskListId,userId }) 
 
 
   const utils = api.useUtils();
-  const deleteTaskListMutation = api.taskList.deleteTaskList.useMutation({onSuccess(input) {
+  const deleteTaskListMutation = api.taskList.deleteTaskList.useMutation({onSuccess() {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     utils.taskList.invalidate();
   },});
   
-  const renameTaskListMutaion = api.taskList.renameTaskList.useMutation({onSuccess(input) {
+  const renameTaskListMutaion = api.taskList.renameTaskList.useMutation({onSuccess() {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     utils.taskList.invalidate();
   },});
 
@@ -101,7 +103,8 @@ const TaskList: React.FC<TaskListProps> = ({ title, tasks, taskListId,userId }) 
      </button>
      <button
        onClick={() => deleteTaskList(taskListId)}
-       className="text-red-500 hover:text-red-700"
+       className="text-red-500 hover:text-red-700 disabled:cursor-not-allowed"
+       disabled={deleteTaskListMutation.isLoading}
      >
        Delete TaskList
      </button>

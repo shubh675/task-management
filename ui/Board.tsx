@@ -3,20 +3,20 @@ import React, { useState } from "react";
 import TaskList from "./TaskList";
 import { api } from "@trpc/client-side/react";
 import { DragDropContext } from "react-beautiful-dnd";
+import { useCreateTaskList } from "@trpc/client-side/hooks";
 const Board: React.FC = () => {
   const [newTaskListTitle, setNewTaskListTitle] = useState<string>("");
   const [addingTaskList, setAddingTaskList] = useState(false);
   
 
-  const createTaskList = api.taskList.create.useMutation({})
+  const createTaskList = useCreateTaskList()
   
  const getTaskLists = api.taskList.getTasklist.useQuery();
-  
-  const addTaskList = () => {
+
+  const addTaskList = async () => {
     if (newTaskListTitle) {
-      createTaskList.mutate({ title: newTaskListTitle },{onSuccess:()=>{
-       getTaskLists.refetch();
-       setAddingTaskList(false);
+      await  createTaskList.mutateAsync({ title: newTaskListTitle },{onSuccess:()=>{   
+              setAddingTaskList(false);
       }});
       setNewTaskListTitle("");
     } else return;
@@ -57,7 +57,8 @@ const Board: React.FC = () => {
               <div className="flex space-x-2">
                 <button
                   onClick={addTaskList}
-                  className="w-1/2 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                  className="w-1/2 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:cursor-not-allowed"
+                  disabled={!newTaskListTitle || createTaskList.isLoading}
                 >
                   Add
                 </button>

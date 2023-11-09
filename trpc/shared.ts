@@ -1,7 +1,9 @@
-import { type inferRouterInputs, type inferRouterOutputs } from "@trpc/client-side/server";
+import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server';
+import { type inferReactQueryProcedureOptions, } from "@trpc/react-query";
 import superjson from "superjson";
 
-import { type AppRouter } from "@/server/api/root";
+
+import { type AppRouter } from "@/trpc/server-side/root";
 
 export const transformer = superjson;
 
@@ -28,3 +30,14 @@ export type RouterInputs = inferRouterInputs<AppRouter>;
  * @example type HelloOutput = RouterOutputs['example']['hello']
  */
 export type RouterOutputs = inferRouterOutputs<AppRouter>;
+
+
+/**
+ * Inference helper for ReactQueryOption.
+ *
+ * @example type PostCreateOptions = ReactQueryOptions['example']['create'];
+ */
+
+export type ReactQueryOptions = inferReactQueryProcedureOptions<AppRouter>;
+
+

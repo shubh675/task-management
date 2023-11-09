@@ -12,7 +12,7 @@ type TaskInputProps = {
 const TaskInput: React.FC<TaskInputProps> = ({ setAddingTask, onCancel,taskListId,userId }) => {
   const [newTask, setNewTask] = useState<string>("");
   const utils = api.useUtils();
-  const createTask = api.task.createTask.useMutation({onSuccess(input) {
+  const createTask = api.task.createTask.useMutation({onSuccess() {
     utils.taskList.invalidate();
   },});
   
