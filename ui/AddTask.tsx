@@ -60,7 +60,7 @@ const AddTask = ({ taskListId, userId }: TypeAddTaskProps) => {
     };
   }, [addingTask]);
   return (
-    <div>
+    <div ref={addTaskContainerRef}>
       {" "}
       {addingTask ? (
         <div className="mt-4 space-y-2">
