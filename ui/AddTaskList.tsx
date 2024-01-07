@@ -83,7 +83,7 @@ const AddTaskList = () => {
       ) : (
         <button
           onClick={() => setAddingTaskList(true)}
-          className=" h-[50px] w-[250px] rounded border border-dashed text-blue-900 px-4 py-2 hover:bg-gray-100"
+          className=" h-[50px] w-[250px] rounded border border-dashed text-blue-400 px-4 py-2 hover:bg-gray-100"
         >
           + Add a task list
         </button>
